@@ -120,7 +120,7 @@ def main(pdf_path, output_path,font_path="C:\\Windows\\Fonts\\simsun.ttc"):
     print("处理完成！")
 
 if __name__ == "__main__":
-    source_file_path = r"C:\Users\94375\Zotero\storage\3EUGGQI6\Hu 等 - 2024 - AUITestAgent Automatic Requirements Oriented GUI Function Testing.pdf"
+    source_file_path = r"论文地址"
     font_path = "C:\\Windows\\Fonts\\simsun.ttc"
     out_put_path = ''.join(source_file_path.split(".")[0:-1]) + "_zh." + source_file_path.split(".")[-1]
     main(source_file_path, out_put_path, font_path)
