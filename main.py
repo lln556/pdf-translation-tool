@@ -85,7 +85,7 @@ def main(pdf_path, output_path,font_path="C:\\Windows\\Fonts\\simsun.ttc"):
             for block, translation in zip(blocks_to_translate, translations):
                 if translation:
                     formatted_zh = '\n'.join([' '.join(line.split()) for line in translation.splitlines()])
-                    # formatted_zh = formatted_zh.replace('\t', '')
+                    formatted_zh = formatted_zh.replace('\t', '')
                     
                     rect = block["rect"]
                     fontsize = sum(block["font_size"]) / len(block["font_size"])
