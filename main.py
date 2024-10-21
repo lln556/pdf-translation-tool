@@ -84,8 +84,8 @@ def main(pdf_path, output_path,font_path="C:\\Windows\\Fonts\\simsun.ttc"):
             # 在主线程中处理每个块的覆写
             for block, translation in zip(blocks_to_translate, translations):
                 if translation:
-                    formatted_zh = '\n'.join([''.join(line.split()) for line in translation.splitlines()])
-                    formatted_zh = formatted_zh.replace('\n', '').replace('\t', '')
+                    formatted_zh = '\n'.join([' '.join(line.split()) for line in translation.splitlines()])
+                    # formatted_zh = formatted_zh.replace('\t', '')
                     
                     rect = block["rect"]
                     fontsize = sum(block["font_size"]) / len(block["font_size"])
@@ -120,7 +120,7 @@ def main(pdf_path, output_path,font_path="C:\\Windows\\Fonts\\simsun.ttc"):
     print("处理完成！")
 
 if __name__ == "__main__":
-    source_file_path = r"论文地址"
+    source_file_path = r"C:\Users\94375\Zotero\storage\3EUGGQI6\Hu 等 - 2024 - AUITestAgent Automatic Requirements Oriented GUI Function Testing.pdf"
     font_path = "C:\\Windows\\Fonts\\simsun.ttc"
     out_put_path = ''.join(source_file_path.split(".")[0:-1]) + "_zh." + source_file_path.split(".")[-1]
     main(source_file_path, out_put_path, font_path)

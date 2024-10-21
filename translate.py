@@ -5,7 +5,7 @@ import json
 from concurrent.futures import ThreadPoolExecutor
 import threading
 import time
-import backoff  # 你需要安装这个库：pip install backoff
+import backoff
 
 from prompt import to_zh, whether_to_trans_prompt
 
@@ -16,7 +16,7 @@ OPENAI_APIKEY = os.getenv('OPENAI_APIKEY')
 # 创建一个线程本地存储对象
 thread_local = threading.local()
 
-# 创建一个简单的速率限制器类
+# 创建一个速率限制器类
 class RateLimiter:
     def __init__(self, max_calls, period):
         self.max_calls = max_calls
