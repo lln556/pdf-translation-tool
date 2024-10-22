@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 import pymupdf
-from translate import translate_multi, whether_to_trans_multi
-import time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+import re
 import backoff
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+from translate import translate_multi, whether_to_trans_multi
 
 def process_block(block):
     if block['type'] == 0:  # 文本类型
@@ -84,8 +85,8 @@ def main(pdf_path, output_path,font_path="C:\\Windows\\Fonts\\simsun.ttc"):
             # 在主线程中处理每个块的覆写
             for block, translation in zip(blocks_to_translate, translations):
                 if translation:
-                    formatted_zh = '\n'.join([' '.join(line.split()) for line in translation.splitlines()])
-                    formatted_zh = formatted_zh.replace('\t', '')
+                    # 中文空格和换行问题(https://github.com/pymupdf/PyMuPDF/discussions/2622)
+                    formatted_zh = '\n'.join([line.replace(' ', chr(0xA0)) for line in translation.splitlines()])
                     
                     rect = block["rect"]
                     fontsize = sum(block["font_size"]) / len(block["font_size"])
@@ -120,7 +121,7 @@ def main(pdf_path, output_path,font_path="C:\\Windows\\Fonts\\simsun.ttc"):
     print("处理完成！")
 
 if __name__ == "__main__":
-    source_file_path = r"C:\Users\94375\Zotero\storage\3EUGGQI6\Hu 等 - 2024 - AUITestAgent Automatic Requirements Oriented GUI Function Testing.pdf"
-    font_path = "C:\\Windows\\Fonts\\simsun.ttc"
+    source_file_path = r"论文地址"
+    font_path = "SIMFANG.TTF"
     out_put_path = ''.join(source_file_path.split(".")[0:-1]) + "_zh." + source_file_path.split(".")[-1]
     main(source_file_path, out_put_path, font_path)
