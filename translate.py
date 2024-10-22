@@ -51,9 +51,9 @@ def increment_daily_count():
         return daily_request_count
 
 # 获取或创建线程本地的 httpx.Client 对象
-def get_httpx_client():
+def get_httpx_client(timeout):
     if not hasattr(thread_local, "client"):
-        thread_local.client = httpx.Client()
+        thread_local.client = httpx.Client(timeout=timeout)
     return thread_local.client
 
 # 修改 translate 函数为多线程版本
@@ -107,8 +107,8 @@ def openai_trans(text, target_language='简体中文', model="gpt-4o-mini"):
         ]
     }
 
-    client = get_httpx_client()
-    response = client.post(url, headers=headers, json=payload)
+    client = get_httpx_client(timeout=None)
+    response = client.post(url, headers=headers, json=payload, timeout=None)
     response.raise_for_status()  # 这会在状态码不是 2xx 时抛出异常
     result = response.json()
     return result['choices'][0]['message']['content']
